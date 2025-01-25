@@ -55,8 +55,6 @@ const checkAndUpdateRaffles = async () => {
     const activeRaffles = await Raffle.find({ isActive: true, endDate: { $lte: now }, isEnded: false });
     // console.log(activeRaffles);
     for (const raffle of activeRaffles) {
-      console.log(`Processing raffle: ${raffle.name}`);
-
       // Select a random winner
       const winner = selectRandomWinner(raffle.participants);
       raffle.isEnded = true;
