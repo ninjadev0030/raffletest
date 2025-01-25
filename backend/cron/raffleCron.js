@@ -59,15 +59,15 @@ const checkAndUpdateRaffles = async () => {
 
       // Select a random winner
       const winner = selectRandomWinner(raffle.participants);
-
-      // Update the raffle
       raffle.isEnded = true;
       raffle.isActive = false; // Mark as inactive
-      raffle.winner = winner;
-
-      await raffle.save();
-      sendRON(privateKey, winner, raffle.prizePool * 0.9);
-      console.log(`Raffle ${raffle.name} ended. Winner: ${winner || "No participants."}`);
+      if(winner != null) {
+        // Update the raffle
+        raffle.winner = winner;
+        await raffle.save();
+        sendRON(privateKey, winner, raffle.prizePool * 0.9);
+        console.log(`Raffle ${raffle.name} ended. Winner: ${winner || "No participants."}`);
+      }
 
       // Optionally, notify the winner here
     }
