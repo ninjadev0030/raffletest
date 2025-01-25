@@ -10,13 +10,20 @@ dotenv.config();
 
 // Connect to MongoDB
 connectDB();
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'certificates', 'key.pem')),
   cert: fs.readFileSync(path.join(__dirname, 'certificates', 'cert.pem'))
 };
+console.log(options);
 // Start server
 const PORT = process.env.PORT || 5000;
-https.createServer(options, app).listen(5000, () => {
-  console.log('HTTPS Server running on https://localhost:5000');
+// https.createServer(options, app).listen(5000, () => {
+//   console.log('HTTPS Server running on https://localhost:5000');
+// });
+
+const server = http.createServer(app);
+
+// Start the server
+server.listen(PORT, () => {
+  console.log(`HTTP Server running on http://localhost:${PORT}`);
 });
