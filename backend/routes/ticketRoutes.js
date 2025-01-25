@@ -79,7 +79,7 @@ router.get('/check-ticket', async (req, res) => {
 });
 
 router.get("/time", (req, res) => {
-  const serverTime = new Date().toISOString();
+  const serverTime = new Date();
   res.json({ serverTime });
 });
 
