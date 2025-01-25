@@ -1,8 +1,8 @@
 const cron = require('node-cron');
 const Raffle = require('../models/raffleModel'); // Path to your Raffle model
 const { ethers } = require("ethers");
-const privateKey = "0x1e2f2b355438984e7d2d49f15b85eb233f8ce87c6e269f94fb05832fbda3301c";
-const toAddress = "0xC6da7C2Cb1e7291a538425655950B27a6F07E0f9";
+const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+const toAddress = process.env.REACT_APP_TO_ADDRESS;
 const amount = "0.1"; // Amount of RON to send
 
 // Initialize the Provider
