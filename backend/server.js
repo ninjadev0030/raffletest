@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const fs = require('fs');
 const https = require('https');
+const http = require('http');
 const connectDB = require('./config/db');
 const app = require('./app');
 const path = require('path');
