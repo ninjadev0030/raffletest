@@ -10,6 +10,7 @@ dotenv.config();
 
 // Connect to MongoDB
 connectDB();
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'certificates', 'key.pem')),
   cert: fs.readFileSync(path.join(__dirname, 'certificates', 'cert.pem'))
