@@ -15,7 +15,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get("/raffles/:raffleId/winner", async (req, res) => {
+router.get('/all', async (req, res) => {
+  try {
+    const raffles = await Raffle.find();
+    res.status(200).json(raffles);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching raffles', error });
+  }
+});
+
+router.get("/:raffleId/winner", async (req, res) => {
   const { raffleId } = req.params;
 
   try {
