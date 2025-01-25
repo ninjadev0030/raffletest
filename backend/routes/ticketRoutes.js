@@ -83,5 +83,14 @@ router.get("/time", (req, res) => {
   res.json({ serverTime });
 });
 
+router.post('/authenticate', (req, res) => {
+  const { password } = req.body;
+  const correctPassword = "RaffleM@ster123.!@#"; // Replace with your secure password
 
+  if (password === correctPassword) {
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: "Invalid password" });
+  }
+});
 module.exports = router;
