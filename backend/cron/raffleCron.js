@@ -62,10 +62,10 @@ const checkAndUpdateRaffles = async () => {
       if(winner != null) {
         // Update the raffle
         raffle.winner = winner;
-        await raffle.save();
         sendRON(privateKey, winner, raffle.prizePool * 0.9);
         console.log(`Raffle ${raffle.name} ended. Winner: ${winner || "No participants."}`);
       }
+      await raffle.save();
 
       // Optionally, notify the winner here
     }
