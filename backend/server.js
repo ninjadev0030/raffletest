@@ -18,13 +18,13 @@ const options = {
 console.log(options);
 // Start server
 // const PORT = process.env.PORT || 5000;
-https.createServer(options, app).listen(443, () => {
-  console.log('HTTPS Server running on https://localhost');
-});
+// https.createServer(options, app).listen(443, () => {
+//   console.log('HTTPS Server running on https://localhost');
+// });
 
 // const server = http.createServer(app);
 
 // Start the server
-// server.listen(PORT, () => {
-//   console.log(`HTTP Server running on http://localhost:${PORT}`);
-// });
+server.listen(PORT, () => {
+  console.log(`HTTP Server running on http://localhost:${PORT}`);
+});
