@@ -7,11 +7,7 @@ const app = express();
 const startCronJob = require('./cron/raffleCron'); // Import the cron function
 
 // Middleware
-app.use(cors({
-    origin: 'https://backendapi.ronin-raffles.com', // Replace with your frontend's domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
