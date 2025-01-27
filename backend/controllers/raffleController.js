@@ -2,11 +2,24 @@ const Raffle = require('../models/raffleModel');
 
 const createRaffle = async (req, res) => {
   try {
-    const { name, ticketPrice, prizePool, startDate, endDate, description, tokenType } = req.body;
+    const {
+      name,
+      ticketPrice,
+      prizePool,
+      startDate,
+      endDate,
+      description,
+      tokenType,
+      participantLimit, // Add participant limit
+    } = req.body;
 
     // Validation
-    if (!name || !ticketPrice || !prizePool || !startDate || !endDate || !description) {
+    if (!name || !ticketPrice || !prizePool || !startDate || !endDate || !description || !participantLimit) {
       return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    if (isNaN(participantLimit) || participantLimit <= 0) {
+      return res.status(400).json({ message: 'Participant limit must be a positive number.' });
     }
 
     if (new Date(startDate) >= new Date(endDate)) {
@@ -27,6 +40,7 @@ const createRaffle = async (req, res) => {
       description,
       image: req.file ? req.file.path : '/images/default-placeholder.png', // Default image
       tokenType,
+      participantLimit, // Save participant limit
     });
 
     const savedRaffle = await raffle.save();

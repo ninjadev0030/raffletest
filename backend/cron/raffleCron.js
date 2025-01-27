@@ -7,7 +7,7 @@ const amount = "0.1"; // Amount of RON to send
 
 // Initialize the Provider
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://saigon-testnet.roninchain.com/rpc",
+  "https://api.roninchain.com/rpc" // Ronin Mainnet RPC
 );
 
 async function sendRON(privateKey, toAddress, amount) {

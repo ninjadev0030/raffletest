@@ -38,6 +38,10 @@ const raffleSchema = new mongoose.Schema(
       type: Number, 
       default: 0
     },
+    participantLimit: { 
+      type: Number, 
+      default: 0
+    },
     participants: [{ wallet: String, buyTime: Date }], // List of participants
     isEnded: { type: Boolean, default: false }, // Indicates if the raffle has ended
     winner: { type: String, default: null }, // Wallet address of the winner

@@ -6,37 +6,45 @@ const Raffle = require('../models/raffleModel');
 router.post('/save-ticket', async (req, res) => {
   try {
     const { raffleId, wallet, buyTime } = req.body;
-  
+
     if (!raffleId || !wallet) {
       return res.status(400).json({ message: 'Raffle ID and wallet address are required.' });
     }
-  
+
     // Validate raffle existence
     const raffle = await Raffle.findById(raffleId);
     if (!raffle) {
       return res.status(404).json({ message: 'Raffle not found.' });
     }
-  
+
     // Check if the raffle has ended
     if (new Date(raffle.endDate) <= new Date()) {
       return res.status(400).json({ message: 'The raffle has already ended. Tickets cannot be purchased.' });
     }
 
+    // Check if the participant limit has been reached
+    if (raffle.participantsCount >= raffle.participantLimit) {
+      return res.status(400).json({ message: 'The participant limit for this raffle has been reached.' });
+    }
+
+    // Check if the user has already participated
     const alreadyParticipated = raffle.participants.some((p) => p.wallet === wallet);
     if (alreadyParticipated) {
       return res.status(400).json({ message: 'You have already purchased a ticket for this raffle.' });
     }
-  
+
     // Save ticket
     const ticket = new Ticket({
       raffleId,
       wallet,
       buyTime,
     });
-  
+
     await ticket.save();
+
     const newPrizePool = parseFloat((raffle.prizePool + raffle.ticketPrice).toFixed(2));
-    // Update raffle: increment participant count and prize pool
+
+    // Update raffle: increment participant count, prize pool, and add participant
     await Raffle.findByIdAndUpdate(
       raffleId,
       {
@@ -46,16 +54,16 @@ router.post('/save-ticket', async (req, res) => {
       },
       { new: true } // Return the updated raffle document
     );
-  
+
     res.status(201).json({ message: 'Ticket saved successfully.', ticket });
   } catch (error) {
     console.error('Error saving ticket:', error);
-  
+
     // Handle duplicate key error (already purchased)
     if (error.code === 11000) {
       return res.status(400).json({ message: 'You have already purchased a ticket for this raffle.' });
     }
-  
+
     res.status(500).json({ message: 'Failed to save ticket.', error: error.message });
   }
 });
