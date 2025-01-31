@@ -18,7 +18,7 @@ const createRaffle = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    if (isNaN(participantLimit) || participantLimit <= 0) {
+    if (isNaN(participantLimit) || participantLimit < 0) {
       return res.status(400).json({ message: 'Participant limit must be a positive number.' });
     }
 

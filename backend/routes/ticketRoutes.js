@@ -23,7 +23,7 @@ router.post('/save-ticket', async (req, res) => {
     }
 
     // Check if the participant limit has been reached
-    if (raffle.participantsCount >= raffle.participantLimit) {
+    if (raffle.participantLimit != 0 && raffle.participantsCount >= raffle.participantLimit) {
       return res.status(400).json({ message: 'The participant limit for this raffle has been reached.' });
     }
 
